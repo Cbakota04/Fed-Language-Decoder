@@ -1,0 +1,28 @@
+from transformers import pipeline
+import pandas as pd
+
+class FedTranslator:
+    def __init__(self):
+        # We use a specialized model for Fed communications
+        # This model detects: Hawkish, Dovish, or Neutral tones
+        self.classifier = pipeline("text-classification", model="yiyanghkust/finbert-tone")
+
+    def translate_tone(self, text):
+        """
+        Input: A paragraph of Fed text.
+        Output: A score (-1 for Dovish, +1 for Hawkish).
+        """
+        # Truncate text to fit model limits if necessary
+        results = self.classifier(text[:512]) 
+        
+        # Simple logic: map labels to a numerical score
+        # Note: You might need to adjust labels based on the specific FinBERT model version
+        label = results[0]['label']
+        score = results[0]['score']
+        
+        if label == "Negative": # Often correlates with Hawkish in general finance, but check model specifics
+            return -score
+        elif label == "Positive":
+            return score
+        else:
+            return 0
