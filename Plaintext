@@ -1,0 +1,11 @@
+Fed-Language-Decoder/
+│
+├── data/                   # Where you save downloaded CSVs
+├── src/                    # Source code folder
+│   ├── __init__.py
+│   ├── scraper.py          # Gets the Fed text
+│   ├── translator.py       # The NLP brain
+│   └── market_data.py      # Gets stock prices
+├── main.py                 # The command center that runs everything
+├── requirements.txt        # List of libraries needed
+└── README.md               # Instructions for users
